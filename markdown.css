@@ -1,0 +1,318 @@
+/*
+  Styles for markdown rendered into the notes page.
+
+  These live outside the component on purpose. Angular's emulated view encapsulation rewrites a component's selectors
+  to require a scoping attribute, and elements injected through [innerHTML] never receive one — so `.markdown pre`
+  written as a component style silently matches nothing. Making them global is the fix that does not rely on the
+  deprecated ::ng-deep.
+*/
+
+/* ── Rendered markdown ───────────────────────────────────────────────────── */
+
+.markdown {
+  font-size: 0.95rem;
+  line-height: 1.7;
+  overflow-wrap: break-word;
+}
+
+.markdown :is(h1, h2, h3, h4) {
+  margin: 2rem 0 0.6rem;
+  line-height: 1.3;
+  letter-spacing: -0.015em;
+}
+
+.markdown h1 { font-size: 1.5rem; }
+.markdown h2 { font-size: 1.22rem; padding-bottom: 0.3rem; border-bottom: 1px solid var(--border); }
+.markdown h3 { font-size: 1.05rem; }
+.markdown h4 { font-size: 0.94rem; color: var(--muted); }
+
+.markdown p {
+  margin: 0.8rem 0;
+}
+
+.markdown :is(ul, ol) {
+  padding-left: 1.4rem;
+}
+
+.markdown li {
+  margin: 0.3rem 0;
+}
+
+.markdown code {
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size: 0.85em;
+  padding: 0.12em 0.36em;
+  border-radius: var(--radius-sm);
+  background: var(--accent-wash);
+  color: var(--accent);
+}
+
+/*
+  Code blocks scroll rather than wrap. 132 of these notes contain box-drawing diagrams, and a wrapped line turns a
+  diagram into noise — so the block gets its own horizontal scroll and the page never widens.
+*/
+.markdown pre {
+  position: relative;
+  padding: 1.1rem 1.2rem;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  background: var(--bg);
+  overflow-x: auto;
+  white-space: pre;
+  line-height: 1.55;
+  box-shadow: var(--shadow-1) inset;
+  tab-size: 4;
+}
+
+/* The language label doubles as a hint that the block scrolls sideways. */
+.markdown pre[data-language]::before {
+  content: attr(data-language);
+  position: absolute;
+  top: 0;
+  right: 0;
+  padding: 0.1rem 0.5rem;
+  border-radius: 0 var(--radius) 0 var(--radius);
+  background: var(--accent-wash);
+  color: var(--muted);
+  font-family: ui-sans-serif, system-ui, sans-serif;
+  font-size: 0.62rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.markdown pre.is-scrollable {
+  border-right: 2px solid var(--accent-muted);
+}
+
+.markdown pre code {
+  padding: 0;
+  background: none;
+  color: var(--text);
+  font-size: 0.83rem;
+}
+
+.markdown blockquote {
+  margin: 1rem 0;
+  padding: 0.6rem 1.1rem;
+  border-left: 3px solid var(--accent-muted);
+  border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+  background: var(--accent-wash);
+  color: var(--muted);
+}
+
+.markdown blockquote p {
+  margin: 0.3rem 0;
+}
+
+/* Wide tables scroll inside their own box rather than pushing the page sideways — some rows here are 1,200 chars. */
+.markdown table {
+  display: block;
+  width: max-content;
+  max-width: 100%;
+  overflow-x: auto;
+  border-collapse: collapse;
+  border-radius: var(--radius);
+  font-size: 0.85rem;
+  margin: 1.1rem 0;
+  box-shadow: var(--shadow-1);
+}
+
+.markdown table.is-scrollable {
+  border-right: 2px solid var(--accent-muted);
+}
+
+/* A sticky header keeps the column meaning while scrolling a long table. */
+.markdown thead th {
+  position: sticky;
+  top: 0;
+  z-index: 1;
+}
+
+.markdown :is(th, td) {
+  padding: 0.45rem 0.7rem;
+  border: 1px solid var(--border);
+  text-align: left;
+  vertical-align: top;
+}
+
+.markdown th {
+  background: var(--accent-wash);
+  font-weight: 600;
+}
+
+.markdown tr:nth-child(even) td {
+  background: var(--bg);
+}
+
+.markdown hr {
+  border: none;
+  border-top: 1px solid var(--border);
+  margin: 2rem 0;
+}
+
+.markdown a {
+  color: var(--accent);
+}
+
+.markdown img {
+  max-width: 100%;
+  height: auto;
+  border-radius: var(--radius-sm);
+}
+
+/* ── Mermaid diagrams ────────────────────────────────────────────────────── */
+
+.diagram {
+  margin: 1.4rem 0;
+  padding: 1.2rem;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  background: var(--surface-raised);
+  box-shadow: var(--shadow-1);
+  overflow-x: auto;
+  text-align: center;
+}
+
+.diagram svg {
+  max-width: 100%;
+  height: auto;
+}
+
+.diagram-failed {
+  border-color: var(--danger);
+  text-align: left;
+}
+
+.diagram-failed figcaption {
+  margin-bottom: 0.5rem;
+  font-size: 0.76rem;
+  color: var(--danger);
+}
+
+/* ── Syntax highlighting ─────────────────────────────────────────────────── */
+
+/*
+  Hand-written token colours rather than a highlight.js stylesheet, so the palette matches the app in both themes
+  instead of importing a theme that only suits one of them.
+*/
+.markdown .hljs-comment,
+.markdown .hljs-quote {
+  color: var(--muted);
+  font-style: italic;
+}
+
+.markdown .hljs-keyword,
+.markdown .hljs-selector-tag,
+.markdown .hljs-literal,
+.markdown .hljs-doctag,
+.markdown .hljs-name {
+  color: #a05fc4;
+}
+
+.markdown .hljs-string,
+.markdown .hljs-regexp,
+.markdown .hljs-addition,
+.markdown .hljs-attribute {
+  color: #2f8a5b;
+}
+
+.markdown .hljs-number,
+.markdown .hljs-symbol,
+.markdown .hljs-bullet {
+  color: #b4682f;
+}
+
+.markdown .hljs-title,
+.markdown .hljs-section,
+.markdown .hljs-title.function_ {
+  color: #2a6fd6;
+}
+
+.markdown .hljs-type,
+.markdown .hljs-class .hljs-title,
+.markdown .hljs-built_in {
+  color: #1f8a8a;
+}
+
+.markdown .hljs-attr,
+.markdown .hljs-variable,
+.markdown .hljs-template-variable,
+.markdown .hljs-property {
+  color: #c05a92;
+}
+
+.markdown .hljs-meta,
+.markdown .hljs-selector-id,
+.markdown .hljs-selector-class {
+  color: var(--muted);
+}
+
+.markdown .hljs-deletion {
+  color: var(--danger);
+}
+
+.markdown .hljs-emphasis { font-style: italic; }
+.markdown .hljs-strong { font-weight: 600; }
+
+/* Dark mode gets its own steps: the light hues are too dark to read on a dark ground. */
+@media (prefers-color-scheme: dark) {
+  .markdown .hljs-keyword,
+  .markdown .hljs-selector-tag,
+  .markdown .hljs-literal,
+  .markdown .hljs-doctag,
+  .markdown .hljs-name { color: #d7a3ee; }
+
+  .markdown .hljs-string,
+  .markdown .hljs-regexp,
+  .markdown .hljs-addition,
+  .markdown .hljs-attribute { color: #7fd4a2; }
+
+  .markdown .hljs-number,
+  .markdown .hljs-symbol,
+  .markdown .hljs-bullet { color: #f0a56a; }
+
+  .markdown .hljs-title,
+  .markdown .hljs-section,
+  .markdown .hljs-title.function_ { color: #79b4f7; }
+
+  .markdown .hljs-type,
+  .markdown .hljs-class .hljs-title,
+  .markdown .hljs-built_in { color: #67cfcf; }
+
+  .markdown .hljs-attr,
+  .markdown .hljs-variable,
+  .markdown .hljs-template-variable,
+  .markdown .hljs-property { color: #f0a0c8; }
+}
+
+/* ── Reading comfort ─────────────────────────────────────────────────────── */
+
+.markdown {
+  /* A measure that does not force the eye to track across a full-width line of prose. */
+  max-width: 74ch;
+}
+
+/* Code, tables and diagrams are data, not prose — they may use the full width. */
+.markdown :is(pre, table, .diagram) {
+  max-width: 100%;
+  width: 100%;
+}
+
+.markdown table {
+  width: max-content;
+}
+
+.markdown :is(h1, h2, h3, h4):first-child {
+  margin-top: 0;
+}
+
+/* Task lists from the notes read as checklists rather than bulleted brackets. */
+.markdown li input[type='checkbox'] {
+  margin-right: 0.4rem;
+  accent-color: var(--accent);
+}
+
+.markdown li:has(input[type='checkbox']) {
+  list-style: none;
+  margin-left: -1.2rem;
+}

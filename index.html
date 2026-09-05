@@ -1,0 +1,63 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Study Notes</title>
+
+  <!--
+    No external origins: every script, style and font is served from this site. That keeps the page working on a
+    host with no server code, and means nothing about what is read here leaks to a third party.
+  -->
+  <meta http-equiv="Content-Security-Policy"
+        content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; connect-src 'self'; base-uri 'none'; form-action 'none'" />
+
+  <link rel="stylesheet" href="site.css" />
+  <link rel="stylesheet" href="markdown.css" />
+  <link rel="stylesheet" href="vendor/highlight-light.css" media="(prefers-color-scheme: light)" />
+  <link rel="stylesheet" href="vendor/highlight-dark.css" media="(prefers-color-scheme: dark)" />
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'><text y='13' font-size='13'>&#128218;</text></svg>" />
+</head>
+<body>
+  <header class="masthead">
+    <span class="brand" id="brand">Study Notes</span>
+    <nav>
+      <a href="#/notes" id="nav-notes" class="active">Notes</a>
+      <a href="#/news" id="nav-news">What's new</a>
+    </nav>
+    <span class="stamp" id="stamp"></span>
+  </header>
+
+  <main>
+    <section id="view-notes" class="page">
+      <aside class="sidebar">
+        <label class="search">
+          <span class="visually-hidden">Filter notes</span>
+          <input type="search" id="note-filter" placeholder="Filter notes" />
+        </label>
+        <div id="note-tree"></div>
+      </aside>
+
+      <article class="reader" id="reader">
+        <p class="empty">Loading notes...</p>
+      </article>
+    </section>
+
+    <section id="view-news" class="page hidden">
+      <div class="news-controls">
+        <div class="tracks" id="news-tracks"></div>
+        <label class="toggle">
+          <input type="checkbox" id="releases-only" /> Releases only
+        </label>
+      </div>
+      <p class="stale-note" id="news-stamp"></p>
+      <ol class="items" id="news-items"></ol>
+    </section>
+  </main>
+
+  <!-- defer preserves document order, so both libraries have run before site.js does. -->
+  <script src="vendor/highlight.min.js" defer></script>
+  <script src="vendor/mermaid.min.js" defer></script>
+  <script src="site.js" defer></script>
+</body>
+</html>
