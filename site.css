@@ -1,0 +1,372 @@
+/* Tokens are defined on :root and only overridden for dark, so a colour never has its single definition inside
+   a media query. markdown.css reads these too. */
+:root {
+  --bg: #f7f7f5;
+  --surface: #ffffff;
+  --text: #1c1d1f;
+  --muted: #6b6f76;
+  --border: #e2e2df;
+  --accent: #1f7a5a;
+  --accent-wash: #e8f3ee;
+  --accent-muted: #a8cfbf;
+  --radius-sm: 6px;
+  --radius-lg: 12px;
+  --shadow-1: 0 1px 2px rgb(0 0 0 / 6%);
+  --shadow-2: 0 6px 20px rgb(0 0 0 / 10%);
+  --fast: 140ms;
+  --ease: cubic-bezier(0.2, 0, 0.2, 1);
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg: #14161a;
+    --surface: #1c1f24;
+    --text: #e8e9ea;
+    --muted: #9aa0a8;
+    --border: #2c3037;
+    --accent: #5fd0a4;
+    --accent-wash: #1b2b25;
+    --accent-muted: #2f5c4b;
+    --shadow-1: 0 1px 2px rgb(0 0 0 / 40%);
+    --shadow-2: 0 6px 20px rgb(0 0 0 / 45%);
+  }
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--text);
+  font: 400 16px/1.6 system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+}
+
+.hidden {
+  display: none !important;
+}
+
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+}
+
+/* Masthead */
+
+.masthead {
+  position: sticky;
+  top: 0;
+  z-index: 5;
+  display: flex;
+  align-items: center;
+  gap: 1.25rem;
+  flex-wrap: wrap;
+  padding: 0.85rem 1.5rem;
+  background: color-mix(in srgb, var(--surface) 88%, transparent);
+  backdrop-filter: blur(8px);
+  border-bottom: 1px solid var(--border);
+}
+
+.brand {
+  font-weight: 640;
+  letter-spacing: -0.01em;
+}
+
+.masthead nav {
+  display: flex;
+  gap: 0.35rem;
+}
+
+.masthead nav a {
+  padding: 0.35rem 0.8rem;
+  border-radius: 99px;
+  color: var(--muted);
+  font-size: 0.88rem;
+  text-decoration: none;
+  transition: background var(--fast) var(--ease), color var(--fast) var(--ease);
+}
+
+.masthead nav a:hover {
+  background: var(--accent-wash);
+  color: var(--text);
+}
+
+.masthead nav a.active {
+  background: var(--accent-wash);
+  color: var(--accent);
+  font-weight: 560;
+}
+
+.stamp {
+  margin-left: auto;
+  color: var(--muted);
+  font-size: 0.74rem;
+}
+
+main {
+  padding: 1.75rem 1.5rem 4rem;
+}
+
+/* Notes layout */
+
+.page {
+  max-width: 84rem;
+  margin: 0 auto;
+}
+
+#view-notes.page {
+  display: grid;
+  grid-template-columns: minmax(14rem, 20rem) 1fr;
+  gap: 2rem;
+  align-items: start;
+}
+
+@media (max-width: 62rem) {
+  #view-notes.page {
+    grid-template-columns: 1fr;
+  }
+}
+
+.sidebar {
+  position: sticky;
+  top: 5rem;
+  max-height: calc(100vh - 7rem);
+  overflow-y: auto;
+  display: grid;
+  gap: 0.5rem;
+  align-content: start;
+}
+
+.search input,
+#note-filter {
+  width: 100%;
+  padding: 0.5rem 0.7rem;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  background: var(--surface);
+  color: var(--text);
+  font: inherit;
+  font-size: 0.88rem;
+}
+
+#note-filter:focus {
+  outline: none;
+  border-color: var(--accent);
+  box-shadow: 0 0 0 3px var(--accent-wash);
+}
+
+#note-tree details {
+  border-bottom: 1px solid var(--border);
+  padding-bottom: 0.3rem;
+}
+
+#note-tree summary {
+  padding: 0.4rem 0.2rem;
+  font-size: 0.82rem;
+  font-weight: 560;
+  cursor: pointer;
+}
+
+#note-tree ul {
+  list-style: none;
+  margin: 0 0 0.3rem;
+  padding: 0 0 0 0.7rem;
+  display: grid;
+  gap: 0.1rem;
+  border-left: 1px solid var(--border);
+}
+
+#note-tree a {
+  display: block;
+  padding: 0.3rem 0.5rem;
+  border-radius: var(--radius-sm);
+  color: var(--text);
+  font-size: 0.82rem;
+  line-height: 1.35;
+  text-decoration: none;
+}
+
+#note-tree a:hover {
+  background: var(--accent-wash);
+}
+
+#note-tree a.selected {
+  background: var(--accent-wash);
+  box-shadow: inset 2px 0 0 var(--accent);
+  color: var(--accent);
+}
+
+.reader {
+  min-width: 0;
+  padding: 1.75rem 2rem;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  background: var(--surface);
+  box-shadow: var(--shadow-2);
+}
+
+.reader h1 {
+  margin: 0;
+  font-size: 1.6rem;
+  letter-spacing: -0.015em;
+}
+
+.meta {
+  margin: 0.35rem 0 1.5rem;
+  padding-bottom: 1rem;
+  border-bottom: 1px solid var(--border);
+  color: var(--muted);
+  font-size: 0.75rem;
+}
+
+/* News */
+
+.news-controls {
+  display: flex;
+  align-items: center;
+  gap: 1.25rem;
+  flex-wrap: wrap;
+  margin-bottom: 0.75rem;
+}
+
+.tracks {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.35rem;
+}
+
+.track {
+  padding: 0.35rem 0.75rem;
+  border: 1px solid var(--border);
+  border-radius: 99px;
+  background: var(--surface);
+  color: var(--text);
+  font: inherit;
+  font-size: 0.8rem;
+  cursor: pointer;
+}
+
+.track:hover {
+  background: var(--accent-wash);
+}
+
+.track.selected {
+  border-color: var(--accent);
+  background: var(--accent-wash);
+  color: var(--accent);
+  font-weight: 560;
+}
+
+.toggle {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  color: var(--muted);
+  font-size: 0.82rem;
+  cursor: pointer;
+}
+
+.stale-note {
+  margin: 0 0 1rem;
+  color: var(--muted);
+  font-size: 0.76rem;
+}
+
+.items {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: 0.7rem;
+}
+
+.item {
+  padding: 0.9rem 1.1rem;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  background: var(--surface);
+  box-shadow: var(--shadow-1);
+}
+
+.item.release {
+  box-shadow: inset 3px 0 0 var(--accent), var(--shadow-1);
+}
+
+.item-head {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+  margin-bottom: 0.35rem;
+  color: var(--muted);
+  font-size: 0.72rem;
+}
+
+.kind {
+  padding: 0.05rem 0.45rem;
+  border: 1px solid var(--border);
+  border-radius: 99px;
+  font-size: 0.66rem;
+  text-transform: uppercase;
+}
+
+.item.release .kind {
+  border-color: var(--accent-muted);
+  color: var(--accent);
+}
+
+.source {
+  font-weight: 560;
+  color: var(--text);
+}
+
+.title {
+  display: block;
+  color: var(--text);
+  font-size: 1rem;
+  font-weight: 560;
+  line-height: 1.35;
+  text-decoration: none;
+}
+
+.title:hover {
+  color: var(--accent);
+  text-decoration: underline;
+}
+
+.summary {
+  margin: 0.4rem 0 0;
+  color: var(--muted);
+  font-size: 0.85rem;
+}
+
+.empty {
+  color: var(--muted);
+}
+
+.diagram {
+  margin: 1.25rem 0;
+  overflow-x: auto;
+  text-align: center;
+}
+
+.diagram svg {
+  max-width: 100%;
+  height: auto;
+}
+
+.diagram-error {
+  color: #b4342b;
+  font-size: 0.8rem;
+}
+
+@media (prefers-color-scheme: dark) {
+  .diagram-error {
+    color: #ff9d94;
+  }
+}
