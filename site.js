@@ -25,6 +25,19 @@ const state = {
 const el = id => document.getElementById(id);
 const reducedMotion = matchMedia('(prefers-reduced-motion: reduce)').matches;
 
+// A section's index note (00_INDEX.md) belongs at the top. The exporter sorts by file name, where "00_" lands after
+// "001_" because '_' sorts above the digits, so every new numbered note would push the index further down.
+const isIndexNote = note => /(^|\/)00_INDEX\.md$/i.test(note.relativePath ?? '');
+
+function pinIndexNotesFirst(index) {
+  for (const category of index.categories) {
+    for (const section of category.sections) {
+      section.notes.sort((a, b) => isIndexNote(b) - isIndexNote(a));
+    }
+  }
+  return index;
+}
+
 async function loadJson(path) {
   const response = await fetch(path, { cache: 'no-cache' });
 
@@ -1092,7 +1105,7 @@ async function start() {
   trackHeroScroll();
 
   try {
-    state.index = await loadJson('data/index.json');
+    state.index = pinIndexNotesFirst(await loadJson('data/index.json'));
     state.flat = flatten(state.index);
   } catch {
     showView('notes');
