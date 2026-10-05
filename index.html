@@ -1,0 +1,184 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <title>Study Notes</title>
+  <meta name="description" content="Engineering notes: system design, .NET, Angular, databases, cloud and more." />
+  <meta name="color-scheme" content="dark light" />
+  <meta name="theme-color" content="#070a14" media="(prefers-color-scheme: dark)" />
+  <meta name="theme-color" content="#f6f7fb" media="(prefers-color-scheme: light)" />
+
+  <!-- Installable: "Add to Home Screen" opens the notes full screen, like an app. -->
+  <link rel="manifest" href="manifest.webmanifest" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+  <meta name="apple-mobile-web-app-title" content="Notes" />
+  <link rel="apple-touch-icon" href="icons/apple-touch-icon.png" />
+
+  <!--
+    No external origins: every script, style and font is served from this site. That keeps the page working on a
+    host with no server code, and means nothing about what is read here leaks to a third party.
+  -->
+  <meta http-equiv="Content-Security-Policy"
+        content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; font-src 'self'; connect-src 'self'; base-uri 'none'; form-action 'none'" />
+
+  <link rel="preload" href="vendor/inter.woff2" as="font" type="font/woff2" crossorigin />
+  <link rel="stylesheet" href="site.css?v=20261005160703" />
+  <link rel="stylesheet" href="markdown.css?v=20261005160703" />
+  <link rel="stylesheet" href="vendor/highlight-light.css?v=20261005160703" media="(prefers-color-scheme: light)" />
+  <link rel="stylesheet" href="vendor/highlight-dark.css?v=20261005160703" media="(prefers-color-scheme: dark)" />
+  <link rel="icon" type="image/svg+xml" href="icons/icon.svg" />
+  <link rel="alternate icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><defs><linearGradient id='g' x1='0' y1='0' x2='1' y2='1'><stop offset='0' stop-color='%2322d3ee'/><stop offset='1' stop-color='%238b5cf6'/></linearGradient></defs><rect width='32' height='32' rx='8' fill='url(%23g)'/><circle cx='11' cy='12' r='3' fill='white'/><circle cx='21' cy='10' r='2.4' fill='white'/><circle cx='17' cy='21' r='3.2' fill='white'/><path d='M11 12 21 10 17 21Z' fill='none' stroke='white' stroke-width='1.4'/></svg>" />
+</head>
+<body>
+  <a class="skip" href="#main">Skip to content</a>
+  <div class="aurora" aria-hidden="true"><span></span><span></span><span></span></div>
+
+  <header class="masthead">
+    <a class="brand" href="#/" aria-label="Home">
+      <span class="brand-mark" aria-hidden="true"></span>
+      <span id="brand">Study Notes</span>
+    </a>
+    <nav aria-label="Primary">
+      <a href="#/" id="nav-home">Home</a>
+      <a href="#/notes" id="nav-notes">Notes</a>
+      <a href="#/news" id="nav-news">What's new</a>
+    </nav>
+    <span class="stamp" id="stamp"></span>
+  </header>
+
+  <main id="main">
+    <!-- Home -->
+    <section id="view-home" class="view hidden" aria-labelledby="hero-title">
+      <div class="hero">
+        <canvas id="hero-canvas" class="hero-canvas" aria-hidden="true"></canvas>
+        <div class="hero-glow" aria-hidden="true"></div>
+        <div class="hero-copy">
+          <p class="eyebrow">Engineering knowledge base</p>
+          <h1 id="hero-title">Every note, <span class="gradient-text">connected</span>.</h1>
+          <p class="lede">System design, .NET, Angular, databases, cloud and AI, written as working notes with diagrams,
+            trade-offs and checklists. Each point in the scene is a note, coloured by topic; pick one to open it.</p>
+          <div class="cta">
+            <a class="button primary" id="cta-start" href="#/notes">Start reading</a>
+            <a class="button ghost" id="cta-design" href="#/notes">System design chapters</a>
+          </div>
+          <dl class="stats" id="stats"></dl>
+        </div>
+        <div class="hero-tip" id="hero-tip" role="status" aria-live="polite"></div>
+      </div>
+
+      <div class="home-body">
+        <section aria-labelledby="latest-title" id="latest-section" class="hidden">
+          <header class="section-head with-link">
+            <div>
+              <h2 id="latest-title">Latest in AI and data</h2>
+              <p>New releases from AI labs, Databricks and the data engineering world, plus the newest What's New notes.</p>
+            </div>
+            <a class="section-link" href="#/news">All news &rarr;</a>
+          </header>
+          <div class="latest" id="latest"></div>
+        </section>
+
+        <section aria-labelledby="collections-title">
+          <header class="section-head">
+            <h2 id="collections-title">Topics</h2>
+            <p>Every subject on this site, from system design to AI.</p>
+          </header>
+          <div class="collections" id="collections"></div>
+        </section>
+
+        <section aria-labelledby="gallery-title" id="gallery-section">
+          <header class="section-head">
+            <h2 id="gallery-title">System design, chapter by chapter</h2>
+            <p>From scaling basics to a stock exchange. Every chapter follows scope, design, deep dive, wrap-up.</p>
+          </header>
+          <div class="gallery" id="gallery"></div>
+        </section>
+      </div>
+    </section>
+
+    <!-- Notes -->
+    <section id="view-notes" class="view page hidden">
+      <!-- Small screens only: the list lives in a drawer, opened from this bar. -->
+      <button type="button" class="browse-bar" id="browse-open" aria-controls="sidebar" aria-expanded="false">
+        <svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 6h16M4 12h16M4 18h10" /></svg>
+        <span class="browse-text">
+          <small id="browse-folder">Browse notes</small>
+          <span id="browse-title">All notes</span>
+        </span>
+        <span class="browse-count" id="browse-count"></span>
+      </button>
+      <div class="drawer-backdrop" id="drawer-backdrop" hidden></div>
+
+      <aside class="sidebar" id="sidebar" aria-label="All notes">
+        <div class="sidebar-head">
+          <span class="sidebar-title">Notes</span>
+          <button type="button" class="drawer-close" id="browse-close" aria-label="Close note list">
+            <svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 6l12 12M18 6 6 18" /></svg>
+          </button>
+        </div>
+        <label class="search">
+          <span class="visually-hidden">Filter notes</span>
+          <svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="6.5" /><path d="m16 16 4.5 4.5" /></svg>
+          <input type="search" id="note-filter" placeholder="Filter notes" autocomplete="off" />
+          <kbd>/</kbd>
+        </label>
+        <div id="note-tree"></div>
+      </aside>
+
+      <article class="reader" id="reader">
+        <p class="empty">Loading notes...</p>
+      </article>
+
+      <nav class="toc" id="toc" aria-label="On this page"></nav>
+    </section>
+
+    <!-- News -->
+    <section id="view-news" class="view page-narrow hidden">
+      <header class="section-head">
+        <h2>What's new</h2>
+        <p class="stale-note" id="news-stamp"></p>
+      </header>
+      <div class="news-notes" id="news-notes"></div>
+      <div class="news-controls">
+        <div class="tracks" id="news-tracks"></div>
+        <label class="toggle">
+          <input type="checkbox" id="releases-only" /> Releases only
+        </label>
+      </div>
+      <ol class="items" id="news-items"></ol>
+    </section>
+  </main>
+
+  <div class="progress" id="progress" aria-hidden="true"></div>
+
+  <!-- Full-screen diagram viewer: pinch or wheel to zoom, drag to pan. Filled by site.js. -->
+  <div class="viewer" id="viewer" role="dialog" aria-modal="true" aria-label="Diagram viewer" hidden>
+    <div class="viewer-bar">
+      <span class="viewer-title" id="viewer-title"></span>
+      <div class="viewer-tools">
+        <button type="button" id="viewer-out" aria-label="Zoom out">
+          <svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14" /></svg>
+        </button>
+        <button type="button" id="viewer-fit" aria-label="Fit to screen">
+          <svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 9V4h5M20 9V4h-5M4 15v5h5M20 15v5h-5" /></svg>
+        </button>
+        <button type="button" id="viewer-in" aria-label="Zoom in">
+          <svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 5v14M5 12h14" /></svg>
+        </button>
+        <button type="button" id="viewer-close" aria-label="Close">
+          <svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 6l12 12M18 6 6 18" /></svg>
+        </button>
+      </div>
+    </div>
+    <div class="viewer-stage" id="viewer-stage"><div class="viewer-content" id="viewer-content"></div></div>
+    <p class="viewer-hint" id="viewer-hint">Pinch or scroll to zoom · drag to move · double-tap to reset</p>
+  </div>
+
+  <!-- mermaid and highlight.js are loaded by site.js only when a note needs them: together they are ~3.7 MB,
+       and a phone should not download that to show the home page or a note without diagrams. -->
+  <script src="site.js?v=20261005160703" defer></script>
+</body>
+</html>
