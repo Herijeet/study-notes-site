@@ -1,0 +1,2106 @@
+/* Tokens are defined on :root and only overridden per theme, so a colour never has its single definition inside a
+   media query. markdown.css reads these too (--bg, --surface-raised, --radius, --danger…). Dark is the default
+   look; light mode is a full theme, not an afterthought. */
+
+@font-face {
+  font-family: "Inter";
+  src: url("vendor/inter.woff2") format("woff2");
+  font-weight: 100 900;
+  font-style: normal;
+  font-display: swap;
+}
+
+:root {
+  --bg: #f6f7fb;
+  --bg-deep: #eef0f7;
+  --surface: #ffffff;
+  --surface-raised: #f3f5fa;
+  --glass: rgb(255 255 255 / 72%);
+  --text: #121523;
+  --muted: #5d6478;
+  --border: #e1e4ee;
+  --accent: #0e8fb0;
+  --accent-2: #7c3aed;
+  --accent-wash: #e3f4f9;
+  --accent-muted: #a5d8e6;
+  --danger: #b4342b;
+  --radius-sm: 8px;
+  --radius: 12px;
+  --radius-lg: 18px;
+  --shadow-1: 0 1px 2px rgb(16 24 40 / 6%);
+  --shadow-2: 0 10px 30px rgb(16 24 40 / 10%);
+  --shadow-3: 0 24px 60px rgb(16 24 40 / 16%);
+  --hero-ink: #0b1020;
+  --fast: 160ms;
+  --ease: cubic-bezier(0.2, 0, 0.2, 1);
+  --font: "Inter", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  --gradient: linear-gradient(120deg, #22d3ee, #8b5cf6 55%, #ec4899);
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg: #070a14;
+    --bg-deep: #04060d;
+    --surface: #0e1322;
+    --surface-raised: #141a2c;
+    --glass: rgb(14 19 34 / 70%);
+    --text: #e7eaf3;
+    --muted: #97a0b8;
+    --border: #1f273d;
+    --accent: #38d6f5;
+    --accent-2: #a78bfa;
+    --accent-wash: #0f2530;
+    --accent-muted: #1d4a5a;
+    --danger: #ff9d94;
+    --shadow-1: 0 1px 2px rgb(0 0 0 / 40%);
+    --shadow-2: 0 10px 30px rgb(0 0 0 / 45%);
+    --shadow-3: 0 24px 60px rgb(0 0 0 / 55%);
+  }
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-padding-top: 5rem;
+}
+
+html {
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  min-height: 100dvh;
+  background: var(--bg);
+  color: var(--text);
+  font: 400 16px/1.65 var(--font);
+  font-feature-settings: "cv11", "ss01";
+  -webkit-font-smoothing: antialiased;
+}
+
+a {
+  color: var(--accent);
+}
+
+.hidden {
+  display: none !important;
+}
+
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+}
+
+.skip {
+  position: absolute;
+  left: 1rem;
+  top: -3rem;
+  z-index: 20;
+  padding: 0.5rem 0.9rem;
+  border-radius: var(--radius-sm);
+  background: var(--surface);
+  color: var(--text);
+}
+
+.skip:focus {
+  top: 0.75rem;
+}
+
+:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+
+/* ---------- Masthead ---------- */
+
+.masthead {
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+  flex-wrap: wrap;
+  padding: 0.8rem max(clamp(1rem, 3vw, 2rem), env(safe-area-inset-right)) 0.8rem max(clamp(1rem, 3vw, 2rem), env(safe-area-inset-left));
+  padding-top: max(0.8rem, env(safe-area-inset-top));
+  background: var(--glass);
+  -webkit-backdrop-filter: blur(14px) saturate(140%);
+  backdrop-filter: blur(14px) saturate(140%);
+  border-bottom: 1px solid var(--border);
+}
+
+.brand {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+  color: var(--text);
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  text-decoration: none;
+}
+
+.brand-mark {
+  width: 1.5rem;
+  height: 1.5rem;
+  border-radius: 7px;
+  background: var(--gradient);
+  box-shadow: 0 0 18px rgb(56 214 245 / 35%);
+}
+
+.masthead nav {
+  display: flex;
+  gap: 0.25rem;
+}
+
+.masthead nav a {
+  padding: 0.4rem 0.85rem;
+  border-radius: 99px;
+  color: var(--muted);
+  font-size: 0.88rem;
+  font-weight: 500;
+  text-decoration: none;
+  transition: background var(--fast) var(--ease), color var(--fast) var(--ease);
+}
+
+.masthead nav a:hover {
+  background: var(--accent-wash);
+  color: var(--text);
+}
+
+.masthead nav a.active {
+  background: var(--accent-wash);
+  color: var(--accent);
+}
+
+.stamp {
+  margin-left: auto;
+  color: var(--muted);
+  font-size: 0.74rem;
+}
+
+@media (max-width: 40rem) {
+  .stamp {
+    display: none;
+  }
+
+  /* One row on a phone: the mark stands in for the name, and the nav takes the rest of the width. */
+  .masthead {
+    flex-wrap: nowrap;
+    gap: 0.5rem;
+    padding-top: max(0.6rem, env(safe-area-inset-top));
+    padding-bottom: 0.6rem;
+  }
+
+  .brand #brand {
+    display: none;
+  }
+
+  .masthead nav {
+    flex: 1;
+    justify-content: flex-end;
+    gap: 0.15rem;
+  }
+
+  .masthead nav a {
+    padding: 0.45rem 0.7rem;
+    font-size: 0.86rem;
+  }
+}
+
+main {
+  padding: 0 0 5rem;
+}
+
+.view {
+  animation: fade-in 260ms var(--ease);
+}
+
+@keyframes fade-in {
+  from {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+}
+
+/* ---------- Home: hero ---------- */
+
+.hero {
+  position: relative;
+  min-height: min(86vh, 52rem);
+  min-height: min(86dvh, 52rem);
+  display: grid;
+  align-items: center;
+  overflow: hidden;
+  isolation: isolate;
+  background:
+    radial-gradient(60rem 30rem at 80% 20%, rgb(139 92 246 / 22%), transparent 60%),
+    radial-gradient(50rem 30rem at 10% 90%, rgb(34 211 238 / 18%), transparent 60%),
+    var(--hero-ink);
+  color: #eef1fa;
+}
+
+.hero-canvas {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  z-index: -1;
+  cursor: grab;
+}
+
+.hero-canvas.pointing {
+  cursor: pointer;
+}
+
+.hero-glow {
+  position: absolute;
+  inset: auto 0 0;
+  height: 30%;
+  z-index: -1;
+  background: linear-gradient(to bottom, transparent, var(--bg));
+  pointer-events: none;
+}
+
+.hero-copy {
+  position: relative;
+  max-width: 44rem;
+  padding: 6rem clamp(1rem, 6vw, 5rem) 7rem;
+  pointer-events: none;
+}
+
+/* The scene passes behind the text on narrow screens; a soft shadow keeps the copy legible over bright nodes. */
+.hero-copy {
+  text-shadow: 0 1px 14px rgb(11 16 32 / 85%);
+}
+
+.hero-copy a,
+.hero-copy .stats {
+  pointer-events: auto;
+}
+
+.eyebrow {
+  display: inline-block;
+  margin: 0 0 1rem;
+  padding: 0.25rem 0.7rem;
+  border: 1px solid rgb(255 255 255 / 16%);
+  border-radius: 99px;
+  background: rgb(255 255 255 / 6%);
+  color: #b9c3dd;
+  font-size: 0.76rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.hero h1 {
+  margin: 0;
+  font-size: clamp(2.4rem, 6vw, 4.4rem);
+  font-weight: 800;
+  line-height: 1.02;
+  letter-spacing: -0.045em;
+}
+
+.gradient-text {
+  background: var(--gradient);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  /* The text is transparent, so an inherited shadow would show through the gradient and muddy it. */
+  text-shadow: none;
+}
+
+.lede {
+  max-width: 36rem;
+  margin: 1.25rem 0 2rem;
+  color: #b9c3dd;
+  font-size: clamp(1rem, 1.6vw, 1.15rem);
+}
+
+.cta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+}
+
+.button {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.75rem 1.25rem;
+  border-radius: 99px;
+  font-size: 0.95rem;
+  font-weight: 600;
+  text-decoration: none;
+  transition: transform var(--fast) var(--ease), box-shadow var(--fast) var(--ease), background var(--fast) var(--ease);
+}
+
+.button.primary {
+  background: var(--gradient);
+  color: #fff;
+  box-shadow: 0 10px 30px rgb(139 92 246 / 35%);
+}
+
+.button.primary:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 16px 40px rgb(139 92 246 / 45%);
+}
+
+.button.ghost {
+  border: 1px solid rgb(255 255 255 / 22%);
+  background: rgb(255 255 255 / 6%);
+  color: #eef1fa;
+}
+
+.button.ghost:hover {
+  background: rgb(255 255 255 / 12%);
+}
+
+.stats {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 2rem;
+  margin: 2.75rem 0 0;
+}
+
+.stats div {
+  display: grid;
+}
+
+.stats dt {
+  order: 2;
+  color: #8e99b6;
+  font-size: 0.78rem;
+}
+
+.stats dd {
+  margin: 0;
+  font-size: 1.7rem;
+  font-weight: 700;
+  letter-spacing: -0.03em;
+}
+
+.hero-tip {
+  position: absolute;
+  left: 0;
+  top: 0;
+  z-index: 2;
+  max-width: 18rem;
+  padding: 0.45rem 0.7rem;
+  border: 1px solid rgb(255 255 255 / 14%);
+  border-radius: var(--radius-sm);
+  background: rgb(11 16 32 / 88%);
+  color: #eef1fa;
+  font-size: 0.8rem;
+  line-height: 1.35;
+  pointer-events: none;
+  opacity: 0;
+  transform: translate(-50%, calc(-100% - 14px));
+  transition: opacity var(--fast) var(--ease);
+}
+
+.hero-tip.visible {
+  opacity: 1;
+}
+
+.hero-tip small {
+  display: block;
+  color: #8e99b6;
+  font-size: 0.7rem;
+}
+
+/* ---------- Home: sections ---------- */
+
+.home-body {
+  display: grid;
+  gap: 4rem;
+  max-width: 84rem;
+  margin: -3rem auto 0;
+  padding: 0 clamp(1rem, 3vw, 2rem);
+  position: relative;
+}
+
+.section-head {
+  margin-bottom: 1.25rem;
+}
+
+.section-head h2 {
+  margin: 0;
+  font-size: clamp(1.4rem, 2.4vw, 1.9rem);
+  letter-spacing: -0.03em;
+}
+
+.section-head p {
+  margin: 0.3rem 0 0;
+  color: var(--muted);
+}
+
+.collections {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(15rem, 1fr));
+  gap: 1rem;
+}
+
+.gallery {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(17rem, 1fr));
+  gap: 1.25rem;
+}
+
+/* A card that tilts toward the pointer. --rx/--ry are set from site.js; without JS (or with reduced motion) they
+   stay 0 and the card is simply flat. */
+.card {
+  --rx: 0deg;
+  --ry: 0deg;
+  position: relative;
+  display: grid;
+  gap: 0.5rem;
+  align-content: start;
+  padding: 1.1rem 1.2rem 1.2rem;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  background: var(--surface);
+  box-shadow: var(--shadow-1);
+  color: var(--text);
+  text-decoration: none;
+  transform: perspective(900px) rotateX(var(--rx)) rotateY(var(--ry));
+  transform-style: preserve-3d;
+  transition: transform 220ms var(--ease), box-shadow var(--fast) var(--ease), border-color var(--fast) var(--ease);
+}
+
+.card::before {
+  content: "";
+  position: absolute;
+  inset: -1px;
+  border-radius: inherit;
+  padding: 1px;
+  background: var(--gradient);
+  -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  opacity: 0;
+  transition: opacity var(--fast) var(--ease);
+  pointer-events: none;
+}
+
+.card:hover {
+  box-shadow: var(--shadow-3);
+}
+
+.card:hover::before,
+.card:focus-visible::before {
+  opacity: 1;
+}
+
+.card h3 {
+  margin: 0;
+  font-size: 1rem;
+  line-height: 1.3;
+  letter-spacing: -0.01em;
+}
+
+.card p {
+  margin: 0;
+  color: var(--muted);
+  font-size: 0.85rem;
+}
+
+.card .count {
+  color: var(--accent);
+  font-size: 0.78rem;
+  font-weight: 600;
+}
+
+.collection-icon {
+  width: 2.25rem;
+  height: 2.25rem;
+  display: grid;
+  place-items: center;
+  border-radius: 10px;
+  background: var(--accent-wash);
+  color: var(--accent);
+  font-weight: 700;
+  font-size: 0.85rem;
+}
+
+.topic .collection-icon {
+  background: color-mix(in srgb, var(--topic, var(--accent)) 16%, transparent);
+  color: var(--topic, var(--accent));
+}
+
+.topic .count {
+  color: var(--topic, var(--accent));
+}
+
+.chapter .thumb {
+  display: grid;
+  place-items: center;
+  height: 9.5rem;
+  margin: -0.35rem -0.45rem 0.4rem;
+  padding: 0.6rem;
+  border-radius: calc(var(--radius-lg) - 6px);
+  background: #fff;
+  overflow: hidden;
+}
+
+.chapter .thumb img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+.chapter .thumb.placeholder {
+  background: var(--gradient);
+  color: #fff;
+  font-size: 2.2rem;
+  font-weight: 800;
+  letter-spacing: -0.04em;
+}
+
+.chapter .num {
+  color: var(--accent);
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+/* ---------- Notes ---------- */
+
+.page {
+  max-width: 96rem;
+  margin: 0 auto;
+  padding: 1.75rem clamp(1rem, 3vw, 2rem) 0;
+}
+
+.page-narrow {
+  max-width: 60rem;
+  margin: 0 auto;
+  padding: 2rem clamp(1rem, 3vw, 2rem) 0;
+}
+
+#view-notes.page {
+  display: grid;
+  grid-template-columns: minmax(14rem, 19rem) minmax(0, 1fr) minmax(12rem, 15rem);
+  gap: 2rem;
+  align-items: start;
+}
+
+@media (max-width: 80rem) {
+  #view-notes.page {
+    grid-template-columns: minmax(14rem, 19rem) minmax(0, 1fr);
+  }
+
+  .toc {
+    display: none;
+  }
+}
+
+.sidebar,
+.toc {
+  position: sticky;
+  top: calc(var(--masthead-h, 4rem) + 1rem);
+  max-height: calc(100vh - var(--masthead-h, 4rem) - 2rem);
+  overflow-y: auto;
+  overscroll-behavior: contain;
+}
+
+.sidebar {
+  display: grid;
+  gap: 0.75rem;
+  align-content: start;
+  padding-right: 0.25rem;
+  scrollbar-width: thin;
+  scrollbar-color: var(--border) transparent;
+}
+
+.icon {
+  width: 1.1rem;
+  height: 1.1rem;
+  flex: none;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 2;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+/* ---- the note list ---- */
+
+.sidebar-head {
+  display: none;
+}
+
+.search {
+  position: sticky;
+  top: 0;
+  z-index: 1;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0 0.7rem;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  background: var(--surface);
+  color: var(--muted);
+  box-shadow: 0 6px 12px -6px var(--bg);
+  transition: border-color var(--fast) var(--ease), box-shadow var(--fast) var(--ease);
+}
+
+.search:focus-within {
+  border-color: var(--accent);
+  box-shadow: 0 0 0 3px var(--accent-wash);
+}
+
+#note-filter {
+  flex: 1;
+  min-width: 0;
+  padding: 0.62rem 0;
+  border: 0;
+  background: none;
+  color: var(--text);
+  font: inherit;
+  font-size: 0.88rem;
+  outline: none;
+}
+
+.search kbd {
+  padding: 0.05rem 0.4rem;
+  border: 1px solid var(--border);
+  border-bottom-width: 2px;
+  border-radius: 5px;
+  color: var(--muted);
+  font: 600 0.7rem/1.4 var(--font);
+}
+
+.search:focus-within kbd {
+  display: none;
+}
+
+#note-tree {
+  display: grid;
+  gap: 0.35rem;
+}
+
+#note-tree details {
+  border: 1px solid transparent;
+  border-radius: var(--radius);
+  transition: background var(--fast) var(--ease), border-color var(--fast) var(--ease);
+}
+
+#note-tree details[open] {
+  border-color: var(--border);
+  background: var(--surface);
+}
+
+#note-tree summary {
+  display: flex;
+  align-items: center;
+  gap: 0.55rem;
+  padding: 0.55rem 0.65rem;
+  border-radius: var(--radius);
+  font-size: 0.84rem;
+  font-weight: 650;
+  letter-spacing: -0.005em;
+  list-style: none;
+  cursor: pointer;
+  user-select: none;
+}
+
+#note-tree summary::-webkit-details-marker {
+  display: none;
+}
+
+#note-tree summary:hover {
+  background: var(--accent-wash);
+}
+
+#note-tree .chevron {
+  width: 0.95rem;
+  height: 0.95rem;
+  color: var(--muted);
+  transition: transform var(--fast) var(--ease);
+}
+
+#note-tree details[open] .chevron {
+  transform: rotate(90deg);
+}
+
+#note-tree .folder-dot {
+  width: 0.55rem;
+  height: 0.55rem;
+  border-radius: 50%;
+  background: var(--dot, var(--accent));
+  box-shadow: 0 0 10px var(--dot, var(--accent));
+  flex: none;
+}
+
+#note-tree .folder-name {
+  flex: 1;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+#note-tree .pill {
+  padding: 0.05rem 0.5rem;
+  border-radius: 99px;
+  background: var(--surface-raised);
+  color: var(--muted);
+  font-size: 0.7rem;
+  font-weight: 600;
+}
+
+#note-tree .section-label {
+  margin: 0.5rem 0 0.1rem;
+  padding: 0 0.95rem;
+  color: var(--muted);
+  font-size: 0.66rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+#note-tree ul {
+  list-style: none;
+  margin: 0;
+  padding: 0.15rem 0.4rem 0.5rem;
+  display: grid;
+  gap: 1px;
+}
+
+#note-tree a {
+  position: relative;
+  display: flex;
+  align-items: baseline;
+  gap: 0.6rem;
+  padding: 0.4rem 0.55rem;
+  border-radius: var(--radius-sm);
+  color: var(--muted);
+  font-size: 0.82rem;
+  line-height: 1.35;
+  text-decoration: none;
+  transition: background var(--fast) var(--ease), color var(--fast) var(--ease);
+}
+
+#note-tree a .n {
+  flex: none;
+  min-width: 1.4rem;
+  color: var(--muted);
+  font-size: 0.7rem;
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+  opacity: 0.7;
+}
+
+#note-tree a:hover {
+  background: var(--surface-raised);
+  color: var(--text);
+}
+
+#note-tree a.selected {
+  background: var(--accent-wash);
+  color: var(--text);
+  font-weight: 600;
+}
+
+#note-tree a.selected::before {
+  content: "";
+  position: absolute;
+  left: -0.4rem;
+  top: 0.35rem;
+  bottom: 0.35rem;
+  width: 3px;
+  border-radius: 3px;
+  background: var(--gradient);
+}
+
+#note-tree a.selected .n {
+  color: var(--accent);
+  opacity: 1;
+}
+
+#note-tree mark {
+  border-radius: 3px;
+  background: color-mix(in srgb, var(--accent) 28%, transparent);
+  color: inherit;
+}
+
+/* ---- small screens: a bar that opens the list as a drawer ---- */
+
+.browse-bar,
+.drawer-backdrop {
+  display: none;
+}
+
+@media (max-width: 62rem) {
+  #view-notes.page {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 1rem;
+  }
+
+  .browse-bar {
+    position: sticky;
+    top: calc(var(--masthead-h, 3.5rem) + 0.5rem);
+    z-index: 6;
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    width: 100%;
+    padding: 0.6rem 0.85rem;
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    background: var(--glass);
+    -webkit-backdrop-filter: blur(14px) saturate(140%);
+    backdrop-filter: blur(14px) saturate(140%);
+    color: var(--text);
+    font: inherit;
+    text-align: left;
+    box-shadow: var(--shadow-1);
+    cursor: pointer;
+  }
+
+  .browse-bar .icon {
+    color: var(--accent);
+  }
+
+  .browse-text {
+    display: grid;
+    flex: 1;
+    min-width: 0;
+    line-height: 1.3;
+  }
+
+  .browse-text small {
+    color: var(--muted);
+    font-size: 0.7rem;
+    font-weight: 600;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+  }
+
+  #browse-title {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    font-size: 0.9rem;
+    font-weight: 600;
+  }
+
+  .browse-count {
+    padding: 0.15rem 0.55rem;
+    border-radius: 99px;
+    background: var(--accent-wash);
+    color: var(--accent);
+    font-size: 0.72rem;
+    font-weight: 600;
+    white-space: nowrap;
+  }
+
+  .drawer-backdrop:not([hidden]) {
+    display: block;
+    position: fixed;
+    inset: 0;
+    z-index: 40;
+    background: rgb(4 6 13 / 55%);
+    backdrop-filter: blur(3px);
+    animation: fade-in 200ms var(--ease);
+  }
+
+  .sidebar {
+    position: fixed;
+    inset: 0 auto 0 0;
+    z-index: 41;
+    width: min(22rem, 88vw);
+    max-height: none;
+    padding: max(1rem, env(safe-area-inset-top)) 1rem max(2rem, env(safe-area-inset-bottom)) max(1rem, env(safe-area-inset-left));
+    border-right: 1px solid var(--border);
+    background: var(--bg);
+    box-shadow: var(--shadow-3);
+    transform: translateX(-105%);
+    visibility: hidden;
+    transition: transform 260ms var(--ease), visibility 0s linear 260ms;
+  }
+
+  .sidebar.open {
+    transform: none;
+    visibility: visible;
+    transition: transform 260ms var(--ease);
+  }
+
+  .sidebar-head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .sidebar-title {
+    font-size: 1.05rem;
+    font-weight: 700;
+    letter-spacing: -0.02em;
+  }
+
+  .drawer-close {
+    display: grid;
+    place-items: center;
+    width: 2.2rem;
+    height: 2.2rem;
+    border: 1px solid var(--border);
+    border-radius: 50%;
+    background: var(--surface);
+    color: var(--text);
+    cursor: pointer;
+  }
+
+  .search kbd {
+    display: none;
+  }
+
+  body.drawer-open {
+    overflow: hidden;
+  }
+}
+
+.reader {
+  min-width: 0;
+  padding: clamp(1.25rem, 3vw, 2.5rem);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  background: var(--surface);
+  box-shadow: var(--shadow-2);
+}
+
+.reader > h1 {
+  margin: 0;
+  font-size: clamp(1.6rem, 3vw, 2.2rem);
+  line-height: 1.15;
+  letter-spacing: -0.035em;
+}
+
+.meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem 1rem;
+  margin: 0.6rem 0 1.75rem;
+  padding-bottom: 1rem;
+  border-bottom: 1px solid var(--border);
+  color: var(--muted);
+  font-size: 0.76rem;
+}
+
+.meta .crumb {
+  color: var(--accent);
+  font-weight: 600;
+}
+
+.pager {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+  margin-top: 3rem;
+  padding-top: 1.5rem;
+  border-top: 1px solid var(--border);
+}
+
+.pager a {
+  display: grid;
+  gap: 0.2rem;
+  padding: 0.8rem 1rem;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  color: var(--text);
+  font-weight: 600;
+  font-size: 0.9rem;
+  text-decoration: none;
+}
+
+.pager a:hover {
+  border-color: var(--accent);
+}
+
+.pager small {
+  color: var(--muted);
+  font-weight: 500;
+  font-size: 0.72rem;
+}
+
+.pager .next {
+  grid-column: 2;
+  text-align: right;
+}
+
+.figures {
+  margin-top: 2.5rem;
+}
+
+.figures h2 {
+  font-size: 1rem;
+}
+
+.figure-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.figure-links a {
+  padding: 0.3rem 0.7rem;
+  border: 1px solid var(--border);
+  border-radius: 99px;
+  color: var(--muted);
+  font-size: 0.78rem;
+  text-decoration: none;
+}
+
+.figure-links a:hover {
+  border-color: var(--accent);
+  color: var(--accent);
+}
+
+.toc p {
+  margin: 0 0 0.5rem;
+  color: var(--muted);
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.toc ol {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  border-left: 1px solid var(--border);
+}
+
+.toc button {
+  display: block;
+  width: 100%;
+  padding: 0.25rem 0.75rem;
+  border: 0;
+  border-left: 2px solid transparent;
+  margin-left: -1px;
+  background: none;
+  color: var(--muted);
+  font: inherit;
+  font-size: 0.8rem;
+  line-height: 1.35;
+  text-align: left;
+  cursor: pointer;
+}
+
+.toc .l3 button {
+  padding-left: 1.5rem;
+  font-size: 0.76rem;
+}
+
+.toc button:hover,
+.toc button.current {
+  border-left-color: var(--accent);
+  color: var(--text);
+}
+
+.progress {
+  position: fixed;
+  left: 0;
+  top: 0;
+  z-index: 30;
+  height: 2px;
+  width: 100%;
+  background: var(--gradient);
+  transform-origin: 0 50%;
+  transform: scaleX(0);
+}
+
+/* ---------- News ---------- */
+
+.news-controls {
+  display: flex;
+  align-items: center;
+  gap: 1.25rem;
+  flex-wrap: wrap;
+  margin-bottom: 1rem;
+}
+
+.tracks {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.35rem;
+}
+
+.track {
+  padding: 0.35rem 0.8rem;
+  border: 1px solid var(--border);
+  border-radius: 99px;
+  background: var(--surface);
+  color: var(--text);
+  font: inherit;
+  font-size: 0.8rem;
+  cursor: pointer;
+}
+
+.track:hover {
+  background: var(--accent-wash);
+}
+
+.track.selected {
+  border-color: var(--accent);
+  background: var(--accent-wash);
+  color: var(--accent);
+  font-weight: 600;
+}
+
+.toggle {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  color: var(--muted);
+  font-size: 0.82rem;
+  cursor: pointer;
+}
+
+.stale-note {
+  color: var(--muted);
+  font-size: 0.8rem;
+}
+
+.items {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: 0.75rem;
+}
+
+.item {
+  padding: 1rem 1.2rem;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  background: var(--surface);
+  box-shadow: var(--shadow-1);
+}
+
+.item.release {
+  box-shadow: inset 3px 0 0 var(--accent), var(--shadow-1);
+}
+
+.item-head {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+  margin-bottom: 0.35rem;
+  color: var(--muted);
+  font-size: 0.72rem;
+}
+
+.kind {
+  padding: 0.05rem 0.45rem;
+  border: 1px solid var(--border);
+  border-radius: 99px;
+  font-size: 0.66rem;
+  text-transform: uppercase;
+}
+
+.item.release .kind {
+  border-color: var(--accent-muted);
+  color: var(--accent);
+}
+
+.source {
+  font-weight: 600;
+  color: var(--text);
+}
+
+.title {
+  display: block;
+  color: var(--text);
+  font-size: 1rem;
+  font-weight: 600;
+  line-height: 1.35;
+  text-decoration: none;
+}
+
+.title:hover {
+  color: var(--accent);
+  text-decoration: underline;
+}
+
+.summary {
+  margin: 0.4rem 0 0;
+  color: var(--muted);
+  font-size: 0.85rem;
+}
+
+.empty {
+  color: var(--muted);
+}
+
+/* ---------- Diagrams ---------- */
+
+.diagram {
+  position: relative;
+  margin: 1.5rem 0;
+  padding: 1rem;
+  overflow: hidden;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  background: var(--surface-raised);
+  text-align: center;
+}
+
+.zoomable {
+  cursor: zoom-in;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.zoom-hint {
+  position: absolute;
+  right: 0.6rem;
+  bottom: 0.6rem;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+  padding: 0.25rem 0.6rem;
+  border: 1px solid var(--border);
+  border-radius: 99px;
+  background: var(--glass);
+  -webkit-backdrop-filter: blur(8px);
+  backdrop-filter: blur(8px);
+  color: var(--muted);
+  font-size: 0.72rem;
+  font-weight: 600;
+  pointer-events: none;
+}
+
+.zoom-hint::before {
+  content: "⤢";
+  color: var(--accent);
+}
+
+.diagram.zoomable:hover .zoom-hint,
+.diagram.zoomable:focus-visible .zoom-hint {
+  color: var(--text);
+  border-color: var(--accent);
+}
+
+/* Shown while mermaid downloads: a quiet placeholder instead of raw diagram source. */
+pre.diagram-pending {
+  position: relative;
+  min-height: 8rem;
+  color: transparent !important;
+  overflow: hidden;
+  border-radius: var(--radius);
+  background: linear-gradient(100deg, var(--surface-raised) 30%, var(--border) 50%, var(--surface-raised) 70%) 0 0 / 300% 100%;
+  animation: shimmer 1.4s linear infinite;
+}
+
+pre.diagram-pending * {
+  visibility: hidden;
+}
+
+pre.diagram-pending::after {
+  content: "Loading diagram…";
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  color: var(--muted);
+  font: 500 0.8rem var(--font);
+}
+
+@keyframes shimmer {
+  to {
+    background-position: -150% 0;
+  }
+}
+
+/* Tables scroll inside their wrapper; a fade marks the side with more to see. */
+.table-wrap {
+  position: relative;
+  margin: 1.25rem 0;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  scrollbar-width: thin;
+}
+
+/* markdown.css makes a bare table its own scroll box; inside the wrapper the wrapper scrolls instead, so the fade
+   hints can see the overflow. The extra class weight is what lets this win over markdown.css, loaded after. */
+.markdown .table-wrap > table {
+  display: table;
+  width: max-content;
+  min-width: 100%;
+  max-width: none;
+  overflow: visible;
+  margin: 0;
+  border: 0;
+  border-radius: 0;
+}
+
+/* Columns wide enough to read: without a floor, a phone squeezes each cell to a word per line. */
+.markdown .table-wrap :is(td, th) {
+  min-width: 6.5rem;
+  max-width: 22rem;
+}
+
+.markdown .table-wrap :is(td, th):first-child {
+  min-width: 4.5rem;
+}
+
+.markdown .table-wrap.fit > table {
+  width: 100%;
+}
+
+.markdown .table-wrap.fit :is(td, th) {
+  min-width: 0;
+  max-width: none;
+  overflow-wrap: anywhere;
+}
+
+.markdown .table-wrap.fit :is(td, th):first-child {
+  width: 34%;
+}
+
+.table-wrap::before,
+.table-wrap::after {
+  content: "";
+  position: sticky;
+  top: 0;
+  display: block;
+  float: left;
+  width: 1.25rem;
+  height: 100%;
+  margin-bottom: -100%;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity var(--fast) var(--ease);
+  z-index: 1;
+}
+
+.table-wrap::before {
+  left: 0;
+  background: linear-gradient(to right, rgb(0 0 0 / 22%), transparent);
+}
+
+.table-wrap::after {
+  left: calc(100% - 1.25rem);
+  background: linear-gradient(to left, rgb(0 0 0 / 22%), transparent);
+}
+
+.table-wrap.more-left::before,
+.table-wrap.more-right::after {
+  opacity: 1;
+}
+
+/* ---------- Viewer ---------- */
+
+.viewer {
+  position: fixed;
+  inset: 0;
+  z-index: 60;
+  display: grid;
+  /* minmax(0, 1fr): without it a long title's min-content widens the column past the screen on a phone. */
+  grid-template-columns: minmax(0, 1fr);
+  grid-template-rows: auto minmax(0, 1fr) auto;
+  background: #05070e;
+  color: #eef1fa;
+  animation: fade-in 180ms var(--ease);
+}
+
+.viewer[hidden] {
+  display: none;
+}
+
+body.viewer-open {
+  overflow: hidden;
+}
+
+.viewer-bar {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: max(0.6rem, env(safe-area-inset-top)) max(0.75rem, env(safe-area-inset-right)) 0.6rem max(0.75rem, env(safe-area-inset-left));
+  border-bottom: 1px solid rgb(255 255 255 / 10%);
+}
+
+.viewer-title {
+  flex: 1;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  font-size: 0.9rem;
+  font-weight: 600;
+}
+
+.viewer-tools {
+  display: flex;
+  gap: 0.35rem;
+}
+
+.viewer-tools button {
+  display: grid;
+  place-items: center;
+  width: 2.5rem;
+  height: 2.5rem;
+  border: 1px solid rgb(255 255 255 / 16%);
+  border-radius: 50%;
+  background: rgb(255 255 255 / 6%);
+  color: inherit;
+  cursor: pointer;
+}
+
+.viewer-tools button:hover {
+  background: rgb(255 255 255 / 14%);
+}
+
+.viewer-stage {
+  position: relative;
+  overflow: hidden;
+  touch-action: none;
+  cursor: grab;
+}
+
+.viewer-stage:active {
+  cursor: grabbing;
+}
+
+.viewer-content {
+  position: absolute;
+  left: 0;
+  top: 0;
+  transform-origin: 0 0;
+  will-change: transform;
+}
+
+.viewer-content > svg,
+.viewer-content > img {
+  display: block;
+  border-radius: var(--radius-sm);
+  box-shadow: 0 20px 60px rgb(0 0 0 / 50%);
+}
+
+/* Diagram files are drawn on white; live diagrams follow the page theme, so their backdrop has to as well or a
+   dark-theme diagram's pale lines vanish on white. */
+.viewer-content > img {
+  background: #fff;
+}
+
+.viewer-content > svg {
+  background: var(--surface-raised);
+}
+
+.viewer-hint {
+  margin: 0;
+  padding: 0.55rem 1rem max(0.55rem, env(safe-area-inset-bottom));
+  color: #8e99b6;
+  font-size: 0.75rem;
+  text-align: center;
+}
+
+.diagram svg {
+  max-width: 100%;
+  height: auto;
+}
+
+.diagram-error {
+  color: var(--danger);
+  font-size: 0.8rem;
+}
+
+.markdown img {
+  max-width: 100%;
+  height: auto;
+  border-radius: var(--radius-sm);
+  background: #fff;
+}
+
+/* ---------- Motion preferences ---------- */
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 1ms !important;
+    transition-duration: 1ms !important;
+    scroll-behavior: auto !important;
+  }
+
+  .card {
+    transform: none;
+  }
+}
+
+/* ---------- Phones ---------- */
+
+@media (max-width: 40rem) {
+  .page {
+    padding: 0.75rem max(0.6rem, env(safe-area-inset-right)) 0 max(0.6rem, env(safe-area-inset-left));
+  }
+
+  .reader {
+    padding: 1.1rem 1rem 1.5rem;
+    border-radius: var(--radius);
+  }
+
+  .reader > h1 {
+    font-size: 1.55rem;
+  }
+
+  .diagram {
+    margin: 1.25rem -0.4rem;
+    padding: 0.6rem;
+  }
+
+  .table-wrap {
+    margin-left: -0.4rem;
+    margin-right: -0.4rem;
+    font-size: 0.86rem;
+  }
+
+  .table-wrap td code {
+    white-space: nowrap;
+  }
+
+  .pager {
+    grid-template-columns: 1fr;
+  }
+
+  .pager .next {
+    grid-column: 1;
+  }
+
+  .home-body {
+    gap: 3rem;
+  }
+
+  /* Two topics per row on a phone, with the description clamped, so fourteen topics are a short scroll. */
+  .collections {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 0.6rem;
+  }
+
+  .collections .card {
+    padding: 0.85rem 0.9rem 0.9rem;
+    gap: 0.35rem;
+  }
+
+  .collections .card h3 {
+    font-size: 0.92rem;
+  }
+
+  .collections .card p {
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    font-size: 0.76rem;
+    line-height: 1.4;
+  }
+
+  .collection-icon {
+    width: 2rem;
+    height: 2rem;
+    font-size: 0.72rem;
+  }
+
+  .gallery {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+
+@media (pointer: coarse) {
+  #note-tree a {
+    min-height: 2.6rem;
+    align-items: center;
+  }
+
+  #note-tree summary {
+    min-height: 2.8rem;
+  }
+
+  .toc button,
+  .figure-links a {
+    min-height: 2.25rem;
+  }
+}
+
+/* ---------- Glass, depth and motion ----------
+   A slow aurora sits behind every view so the translucent surfaces above it have something to frost. Cards, news
+   items and panels are glass: a translucent fill, a blur of what is behind, a hairline light edge on top and a
+   highlight that follows the pointer. Sections rise into place as they scroll in (and settle back down when you
+   scroll up past them). All of it switches off for reduced motion, and the blur falls back to a solid fill where
+   backdrop-filter is unsupported. */
+
+:root {
+  --glass-fill: rgb(255 255 255 / 58%);
+  --glass-strong: rgb(255 255 255 / 78%);
+  --glass-edge: rgb(255 255 255 / 85%);
+  --glass-line: rgb(18 21 35 / 8%);
+  --glass-blur: blur(18px) saturate(160%);
+  --aurora-1: rgb(34 211 238 / 26%);
+  --aurora-2: rgb(139 92 246 / 22%);
+  --aurora-3: rgb(236 72 153 / 16%);
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --glass-fill: rgb(22 29 52 / 42%);
+    --glass-strong: rgb(16 21 38 / 72%);
+    --glass-edge: rgb(255 255 255 / 9%);
+    --glass-line: rgb(255 255 255 / 8%);
+    --aurora-1: rgb(34 211 238 / 16%);
+    --aurora-2: rgb(139 92 246 / 20%);
+    --aurora-3: rgb(236 72 153 / 11%);
+  }
+}
+
+.aurora {
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+.aurora span {
+  position: absolute;
+  width: 55vmax;
+  height: 55vmax;
+  border-radius: 50%;
+  filter: blur(70px);
+  opacity: 0.9;
+  animation: drift 28s ease-in-out infinite alternate;
+}
+
+.aurora span:nth-child(1) {
+  top: -20vmax;
+  left: -12vmax;
+  background: radial-gradient(circle, var(--aurora-1), transparent 65%);
+}
+
+.aurora span:nth-child(2) {
+  top: 30vh;
+  right: -18vmax;
+  background: radial-gradient(circle, var(--aurora-2), transparent 65%);
+  animation-duration: 34s;
+  animation-delay: -8s;
+}
+
+.aurora span:nth-child(3) {
+  bottom: -26vmax;
+  left: 20vw;
+  background: radial-gradient(circle, var(--aurora-3), transparent 65%);
+  animation-duration: 40s;
+  animation-delay: -16s;
+}
+
+/* A faint perspective grid, fading out toward the top, gives the background depth without competing with text. */
+.aurora::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-image:
+    linear-gradient(var(--glass-line) 1px, transparent 1px),
+    linear-gradient(90deg, var(--glass-line) 1px, transparent 1px);
+  background-size: 56px 56px;
+  -webkit-mask-image: linear-gradient(to top, #000, transparent 70%);
+  mask-image: linear-gradient(to top, #000, transparent 70%);
+  opacity: 0.6;
+}
+
+@keyframes drift {
+  to {
+    transform: translate3d(8vw, 6vh, 0) scale(1.15) rotate(25deg);
+  }
+}
+
+body {
+  background: transparent;
+}
+
+html {
+  background: var(--bg);
+}
+
+/* ---- glass surfaces ---- */
+
+.card,
+.item,
+.reader,
+.browse-bar,
+.track,
+.latest-card {
+  border-color: var(--glass-edge);
+  background: var(--glass-fill);
+  -webkit-backdrop-filter: var(--glass-blur);
+  backdrop-filter: var(--glass-blur);
+  box-shadow: inset 0 1px 0 var(--glass-edge), var(--shadow-1);
+}
+
+/* Long notes read on a firmer pane: the frost is there, but text never sits on a busy background. */
+.reader {
+  background: var(--glass-strong);
+  box-shadow: inset 0 1px 0 var(--glass-edge), var(--shadow-2);
+}
+
+@supports not ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
+  .card,
+  .item,
+  .reader,
+  .browse-bar,
+  .track,
+  .latest-card {
+    background: var(--surface);
+  }
+}
+
+/* The pointer-following highlight. --mx/--my are set by site.js alongside the tilt. */
+.card::after,
+.latest-card::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: radial-gradient(22rem circle at var(--mx, 50%) var(--my, 0%), rgb(255 255 255 / 14%), transparent 45%);
+  opacity: 0;
+  transition: opacity 240ms var(--ease);
+  pointer-events: none;
+}
+
+.card:hover::after,
+.latest-card:hover::after {
+  opacity: 1;
+}
+
+.card:hover {
+  box-shadow: inset 0 1px 0 var(--glass-edge), var(--shadow-3), 0 0 0 1px color-mix(in srgb, var(--topic, var(--accent)) 35%, transparent);
+}
+
+/* Lift the icon and thumbnail off the card's face, so the tilt reads as depth rather than a flat skew. Text stays
+   on the face: lifting it would rasterise it slightly larger and soften it. */
+.card .collection-icon {
+  transform: translateZ(34px);
+  box-shadow: 0 8px 22px color-mix(in srgb, var(--topic, var(--accent)) 30%, transparent);
+}
+
+.chapter .thumb {
+  transform: translateZ(26px);
+  box-shadow: 0 10px 26px rgb(0 0 0 / 22%);
+}
+
+/* ---- hero: glass stats and scroll parallax (--hero-p is 0 at the top, 1 when the hero has scrolled away) ---- */
+
+.hero {
+  --hero-p: 0;
+}
+
+.hero-copy {
+  transform: translate3d(0, calc(var(--hero-p) * -90px), 0);
+  opacity: calc(1 - var(--hero-p) * 1.3);
+}
+
+.hero-canvas {
+  transform: translate3d(0, calc(var(--hero-p) * 120px), 0) scale(calc(1 + var(--hero-p) * 0.12));
+}
+
+.stats {
+  gap: 0.75rem;
+}
+
+.stats div {
+  min-width: 6.5rem;
+  padding: 0.7rem 1rem 0.6rem;
+  border: 1px solid rgb(255 255 255 / 12%);
+  border-radius: var(--radius);
+  background: rgb(255 255 255 / 6%);
+  -webkit-backdrop-filter: blur(12px) saturate(150%);
+  backdrop-filter: blur(12px) saturate(150%);
+  box-shadow: inset 0 1px 0 rgb(255 255 255 / 12%);
+  text-shadow: none;
+}
+
+.button.primary {
+  position: relative;
+  overflow: hidden;
+}
+
+/* A sheen sweeps across the main button every few seconds. */
+.button.primary::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(110deg, transparent 30%, rgb(255 255 255 / 45%) 50%, transparent 70%);
+  transform: translateX(-120%);
+  animation: sheen 5s var(--ease) infinite 1.5s;
+}
+
+@keyframes sheen {
+  30%,
+  100% {
+    transform: translateX(120%);
+  }
+}
+
+/* ---- scroll reveal: rise from below when scrolling down, drop from above when scrolling back up ----
+   Translate and scale only: a 3D rotation here would make backdrop-filter sample a skewed backdrop mid-flight. */
+
+.collections,
+.gallery,
+.items,
+.latest {
+  perspective: 1200px;
+}
+
+.reveal {
+  opacity: 0;
+  translate: 0 48px;
+  scale: 0.94;
+  transition:
+    opacity 650ms var(--ease) var(--delay, 0ms),
+    translate 750ms cubic-bezier(0.16, 1, 0.3, 1) var(--delay, 0ms),
+    scale 750ms cubic-bezier(0.16, 1, 0.3, 1) var(--delay, 0ms),
+    transform 220ms var(--ease),
+    box-shadow var(--fast) var(--ease);
+}
+
+.reveal.from-above {
+  translate: 0 -48px;
+}
+
+.reveal.in {
+  opacity: 1;
+  translate: 0 0;
+  scale: 1;
+}
+
+/* ---- latest AI and data news on the home page ---- */
+
+/* Grid children default to min-width: auto, which would let the scrolling row widen the whole page. */
+.home-body > section,
+.news-notes {
+  min-width: 0;
+}
+
+.latest {
+  display: grid;
+  grid-auto-flow: column;
+  grid-auto-columns: minmax(17rem, 22rem);
+  gap: 1rem;
+  overflow-x: auto;
+  overscroll-behavior-x: contain;
+  scroll-snap-type: x mandatory;
+  padding: 0.5rem 0.25rem 1.25rem;
+  margin: 0 -0.25rem;
+  scrollbar-width: thin;
+  scrollbar-color: var(--border) transparent;
+}
+
+.latest-card {
+  position: relative;
+  display: grid;
+  gap: 0.55rem;
+  align-content: start;
+  min-width: 0;
+  padding: 1rem 1.15rem 1.1rem;
+  border: 1px solid var(--glass-edge);
+  border-radius: var(--radius-lg);
+  color: var(--text);
+  text-decoration: none;
+  scroll-snap-align: start;
+  transition: transform 220ms var(--ease), box-shadow var(--fast) var(--ease);
+}
+
+.latest-card::before {
+  content: "";
+  position: absolute;
+  inset: 0 0 auto;
+  height: 3px;
+  border-radius: var(--radius-lg) var(--radius-lg) 0 0;
+  background: linear-gradient(90deg, var(--track, var(--accent)), transparent);
+}
+
+.latest-card:hover {
+  transform: translateY(-4px);
+  box-shadow: inset 0 1px 0 var(--glass-edge), var(--shadow-3);
+}
+
+.latest-card h3 {
+  margin: 0;
+  font-size: 0.98rem;
+  line-height: 1.35;
+  overflow-wrap: anywhere;
+}
+
+.latest-card p {
+  margin: 0;
+  color: var(--muted);
+  font-size: 0.82rem;
+  line-height: 1.5;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.latest-card.note-card {
+  background:
+    linear-gradient(135deg, color-mix(in srgb, var(--accent-2) 22%, transparent), transparent 60%),
+    var(--glass-fill);
+}
+
+.chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  width: fit-content;
+  padding: 0.12rem 0.55rem;
+  border: 1px solid color-mix(in srgb, var(--track, var(--accent)) 45%, transparent);
+  border-radius: 99px;
+  background: color-mix(in srgb, var(--track, var(--accent)) 14%, transparent);
+  /* Pulled toward the text colour so bright track hues (amber, pink) stay readable on the light theme. */
+  color: color-mix(in srgb, var(--track, var(--accent)) 72%, var(--text));
+  font-size: 0.68rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.chip::before {
+  content: "";
+  width: 0.4rem;
+  height: 0.4rem;
+  border-radius: 50%;
+  background: currentColor;
+  box-shadow: 0 0 8px currentColor;
+}
+
+.latest-meta {
+  color: var(--muted);
+  font-size: 0.72rem;
+}
+
+.section-head.with-link {
+  display: flex;
+  align-items: end;
+  justify-content: space-between;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+.section-link {
+  color: var(--accent);
+  font-size: 0.88rem;
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.section-link:hover {
+  text-decoration: underline;
+}
+
+/* ---- news page ---- */
+
+.item {
+  position: relative;
+  min-width: 0;
+  overflow-wrap: anywhere;
+  border-left: 3px solid var(--track, var(--border));
+}
+
+.item.release {
+  box-shadow: inset 0 1px 0 var(--glass-edge), 0 0 24px color-mix(in srgb, var(--track, var(--accent)) 14%, transparent), var(--shadow-1);
+}
+
+.item .chip {
+  font-size: 0.62rem;
+}
+
+.track.selected {
+  border-color: var(--accent);
+  background: var(--accent-wash);
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--accent) 18%, transparent);
+}
+
+.news-notes {
+  margin-bottom: 2rem;
+}
+
+.news-notes:empty {
+  display: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .aurora span,
+  .button.primary::after {
+    animation: none;
+  }
+
+  .reveal {
+    opacity: 1;
+    translate: none;
+    scale: none;
+  }
+
+  .hero-copy,
+  .hero-canvas {
+    transform: none;
+    opacity: 1;
+  }
+
+  .card .collection-icon,
+  .chapter .thumb {
+    transform: none;
+  }
+}
+
+@media (max-width: 40rem) {
+  .aurora span {
+    filter: blur(50px);
+  }
+
+  .stats div {
+    min-width: 0;
+    padding: 0.55rem 0.8rem 0.5rem;
+  }
+
+  .stats dd {
+    font-size: 1.35rem;
+  }
+
+  .latest {
+    grid-auto-columns: 82%;
+  }
+}
+
+/* The hero dissolves into the aurora rather than ending in a hard edge where its own background stops. */
+.hero {
+  -webkit-mask-image: linear-gradient(to bottom, #000 72%, transparent);
+  mask-image: linear-gradient(to bottom, #000 72%, transparent);
+}
+
+.hero-glow {
+  display: none;
+}
+
+@media print {
+  .aurora {
+    display: none;
+  }
+
+  .reveal {
+    opacity: 1;
+    translate: none;
+    scale: none;
+  }
+}
