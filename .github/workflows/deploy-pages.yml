@@ -1,0 +1,56 @@
+# Publishes the site from the exporter's gh-pages branch, fixing up the export on the way.
+#
+# The exporter force-pushes gh-pages as a single fresh commit, so anything committed there by hand is lost on the next
+# rebuild. Fixes live here instead and are applied to every export before it goes live.
+#
+# Requires: Settings -> Pages -> Source = "GitHub Actions", and this branch as the repository's default branch
+# (scheduled workflows only run from the default branch).
+name: Deploy site
+
+on:
+  schedule:
+    - cron: "17 * * * *"   # pick up new exports within the hour
+  workflow_dispatch:       # run by hand, or from the exporter after a push
+  push:
+    branches-ignore: [gh-pages]
+    paths: [".github/workflows/deploy-pages.yml", "scripts/**"]
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Check out fix-up scripts
+        uses: actions/checkout@v4
+        with:
+          path: src
+
+      - name: Check out the latest export
+        uses: actions/checkout@v4
+        with:
+          ref: gh-pages
+          path: site
+
+      - name: Pin index notes to the top of their sections
+        run: python3 src/scripts/pin_index_notes.py site/data/index.json
+
+      - name: Drop git metadata from the upload
+        run: rm -rf site/.git
+
+      - uses: actions/configure-pages@v5
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: site
+      - id: deployment
+        uses: actions/deploy-pages@v4

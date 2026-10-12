@@ -1,85 +1,105 @@
-# Engineering Study Notes
+<div align="center">
 
-A fast, offline-friendly study site with **103 engineering notes**: system design, C#/.NET, Angular, databases, data engineering, cloud/DevOps, security, algorithms, AI/ML and more.
+<img src="icons/icon.svg" alt="" width="88" height="88" />
 
-## 🌐 Live site
+# Engineering Notes
 
-**https://herijeet.github.io/study-notes-site/**
+**100+ in-depth engineering study notes in one fast, private, installable web app.**
 
-It's free to use and needs no sign-up. It works on desktop and mobile.
+System design · C# & .NET · Angular · Databases · Data Engineering · Azure & DevOps · Security · DSA · AI/ML
 
-| Page | URL |
-|------|-----|
-| Home | https://herijeet.github.io/study-notes-site/#/ |
-| All notes | https://herijeet.github.io/study-notes-site/#/notes |
-| Tech news | https://herijeet.github.io/study-notes-site/#/news |
-| A single note | `https://herijeet.github.io/study-notes-site/#/notes/<slug>` |
+### [🌐 Open the site → herijeet.github.io/study-notes-site](https://herijeet.github.io/study-notes-site/)
 
-> **Install it as an app:** open the site on your phone or in Chrome/Edge, then pick **Add to Home Screen** or **Install**. It opens full screen like a native app.
+[![Live site](https://img.shields.io/badge/live-herijeet.github.io%2Fstudy--notes--site-22d3ee?style=for-the-badge)](https://herijeet.github.io/study-notes-site/)
+[![Deploy](https://img.shields.io/github/actions/workflow/status/Herijeet/study-notes-site/deploy-pages.yml?style=for-the-badge&label=deploy)](https://github.com/Herijeet/study-notes-site/actions/workflows/deploy-pages.yml)
+![No tracking](https://img.shields.io/badge/tracking-none-8b5cf6?style=for-the-badge)
 
-## 📚 What's inside
+</div>
 
-| Category | Notes | Covers |
-|----------|------:|--------|
-| What's New | 3 | Recent releases in software and AI: what each one is, why it matters and how to use it |
-| System Design | 32 | Scaling, estimation and 25 worked designs, from rate limiters to stock exchanges |
-| Architecture & APIs | 3 | Architecture styles, DDD, messaging, API design |
-| C# & .NET | 4 | The runtime, the language, ASP.NET Core, EF Core, performance |
-| Frontend | 1 | Angular, TypeScript, change detection, signals, RxJS |
-| Data Engineering | 14 | Spark, Databricks, Delta Lake, data modelling, streaming, governance |
-| Databases | 4 | Relational internals, SQL, NoSQL, caching |
-| DevOps & Cloud | 18 | CI/CD, GitHub Actions, Azure DevOps, Azure services, Git, observability |
-| Security | 2 | Threat modelling, identity, OWASP, encryption |
-| Data Structures & Algorithms | 12 | Core structures and patterns, from arrays to dynamic programming |
-| Programming Principles | 3 | OOP, SOLID, design patterns, concurrency |
-| CS Foundations | 2 | Networking and operating systems |
-| AI & Machine Learning | 3 | ML foundations, LLM engineering, RAG |
-| Testing & Quality | 1 | Test strategy, test doubles, flakiness, CI gates |
-| Domain Knowledge | 1 | Financial-domain basics for engineers |
+---
 
-## ✨ Features
+## Why this exists
 
-- **Rich notes** with syntax-highlighted code and Mermaid diagrams
-- **Light and dark themes** that follow your system setting
-- **Installable PWA**, with direct links to any note
-- **Private by design**: every script, style and font is served from this site. There are no trackers, analytics or third-party requests (enforced by a strict Content-Security-Policy).
-- **Static hosting only**: no backend, no build step to view it
+These are the notes I wrote while preparing for senior backend and system design interviews and while working day to day on .NET, Angular and Azure. Each note is written to be studied, not skimmed. It explains the idea, shows how it works with diagrams and code, covers the trade-offs, and ends with questions to test yourself.
 
-## 🗂️ Project structure
+The site is free and open to everyone, with no sign-up, ads or tracking.
+
+## What you'll find
+
+| Area | What it covers |
+|------|----------------|
+| 🆕 **What's New** | Recent releases in software and AI: what each one is, why it matters and how to use it. Updated regularly. |
+| 🏗️ **System Design** | Scaling basics, back-of-the-envelope estimation, and 25 worked designs: rate limiter, URL shortener, chat, news feed, YouTube, payments, stock exchange and more |
+| 🧱 **Architecture & APIs** | Architecture styles, domain-driven design, messaging and event-driven systems, API design |
+| 🟣 **C# & .NET** | The runtime, the language, ASP.NET Core, EF Core vs Dapper, performance |
+| 🅰️ **Frontend** | Angular, TypeScript, change detection, signals, RxJS |
+| 📊 **Data Engineering** | Spark, Databricks, Delta Lake, data modelling, storage formats, streaming, orchestration and governance |
+| 🗄️ **Databases** | Relational internals, SQL, NoSQL stores, caching |
+| ☁️ **DevOps & Cloud** | CI/CD, GitHub Actions, Azure DevOps, Azure services, Git, observability |
+| 🔐 **Security** | Threat modelling, identity, OWASP, encryption in practice |
+| 🧮 **Data Structures & Algorithms** | Core structures and patterns, from arrays and binary search to graphs and dynamic programming |
+| 🧩 **Programming Principles** | OOP, SOLID, design patterns, concurrency |
+| 🖥️ **CS Foundations** | Networking and operating systems, tied back to what they mean in production |
+| 🤖 **AI & Machine Learning** | ML foundations, LLM engineering and RAG, AI in the development lifecycle |
+| ✅ **Testing & Quality** | Test strategy, test doubles, flaky tests, CI gates |
+| 💹 **Domain Knowledge** | Financial-domain basics for engineers |
+
+There's also a **What's new** feed with curated engineering news.
+
+## Features
+
+- **Made for studying.** Every note has a table of contents, reading time, syntax-highlighted code and Mermaid diagrams.
+- **Quick to search.** Press <kbd>/</kbd> to filter notes across every category.
+- **Shareable links.** Every note has its own URL, such as `#/notes/<slug>`.
+- **Installable.** Choose *Add to Home Screen* on a phone, or *Install* in Chrome or Edge, and it opens full screen like an app.
+- **Light and dark themes** that follow your system setting.
+- **Private by design.** Every script, style and font is served from the site itself. A strict Content-Security-Policy blocks third-party requests, so nothing you read is sent anywhere.
+- **No backend.** It's plain static files on GitHub Pages, so it's fast and needs no maintenance.
+
+## Quick links
+
+| | |
+|---|---|
+| Home | https://herijeet.github.io/study-notes-site/ |
+| Browse all notes | https://herijeet.github.io/study-notes-site/#/notes |
+| What's new feed | https://herijeet.github.io/study-notes-site/#/news |
+
+## How it's built
 
 ```
-index.html             App shell (hash-based routing)
-site.js / site.css     App logic and styles
-markdown.css           Note typography
-hero3d.js              Home page hero animation
-manifest.webmanifest   PWA manifest
-data/index.json        Catalogue of categories and notes
-data/notes/*.json      Content of each note
-data/news.json         Tech news feed
-Engineering-KB/        Images used by the notes
-vendor/                Bundled highlight.js, Mermaid and the Inter font
-icons/                 App icons
+ Markdown notes ──► exporter (Markdig) ──► gh-pages branch ──► Deploy workflow ──► GitHub Pages
+                     HTML + JSON index      raw export          fix-ups applied      live site
 ```
 
-## 💻 Run locally
+1. The notes are written in Markdown. An exporter renders them to HTML and writes a JSON catalogue of categories and notes.
+2. Each export is pushed to the **`gh-pages`** branch as one fresh commit, which replaces whatever was there before.
+3. The **[Deploy site](.github/workflows/deploy-pages.yml)** workflow in this branch picks up the latest export, applies fix-ups from [`scripts/`](scripts), and publishes it with GitHub Pages.
 
-The site loads JSON with `fetch`, so serve the folder over HTTP rather than opening `index.html` directly:
+Fix-ups live here, not in `gh-pages`, so new exports never undo them. The current fix-up is
+[`pin_index_notes.py`](scripts/pin_index_notes.py). It keeps each section's **Index** note at the top, so the
+What's New index stays first however many notes are added.
+
+The front end is plain HTML, CSS and JavaScript with no framework. It uses hash-based routing, and
+highlight.js, Mermaid and the Inter font are bundled locally.
+
+## Run it locally
 
 ```bash
-git clone https://github.com/herijeet/study-notes-site.git
+git clone --branch gh-pages https://github.com/Herijeet/study-notes-site.git
 cd study-notes-site
-python3 -m http.server 8080
-# then open http://localhost:8080
+python3 -m http.server 8080      # then open http://localhost:8080
 ```
 
-## 🚀 Deploy your own copy
+Serve the folder over HTTP rather than opening `index.html` directly, because the notes load with `fetch`.
 
-1. Fork this repository.
-2. Go to **Settings → Pages** and set **Source** to *Deploy from a branch*, using the default branch and `/ (root)`.
-3. Your copy goes live at `https://<your-username>.github.io/study-notes-site/`.
+## Feedback
 
-The `.nojekyll` file makes GitHub Pages serve the files as they are.
+Spotted a mistake, or want a topic covered? [Open an issue](https://github.com/Herijeet/study-notes-site/issues). Corrections are always welcome.
 
-## 🤝 Feedback
+If you find it useful, a ⭐ helps other people find it.
 
-Found a mistake or want a topic covered? [Open an issue](https://github.com/herijeet/study-notes-site/issues).
+---
+
+<div align="center">
+Built by <a href="https://github.com/Herijeet">Abhijeet Gautam</a>
+</div>
